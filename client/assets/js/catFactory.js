@@ -72,8 +72,45 @@ function eyeVariation(num) {
     switch (num) {
         case 1:
             normalEyes()
-            $('#eyeName').html('Basic')
+            $('#eyeShapeCode').html('Big')
             break
+
+        case 2:
+            normalEyes()
+            $('#eyeShapeCode').html('Cute')
+            eyesType1()
+            break
+
+        case 3:
+            normalEyes()
+            $('#eyeShapeCode').html('Cops')
+            eyesType2()
+            break
+
+        case 4:
+            normalEyes()
+            $('#eyeShapeCode').html('Chillin')
+            eyesType3()
+            break
+
+        case 5:
+            normalEyes()
+            $('#eyeShapeCode').html('Happy Pills')
+            eyesType4()
+            break
+
+        case 5:
+            normalEyes()
+            $('#eyeShapeCode').html('Chill')
+            eyesType5()
+            break
+
+        case 5:
+            normalEyes()
+            $('#eyeShapeCode').html('Chill')
+            eyesType6()
+            break
+
     }
 }
 
@@ -88,7 +125,23 @@ function decorationVariation(num) {
 }
 
 async function normalEyes() {
-    await $('.cat__eye').find('span').css('border', 'none')
+    await $('.eye').find('span').css('border', 'none')
+}
+
+async function eyesType1() {
+    await $('.eye').find('span').css('border-left', '10px solid')
+}
+
+async function eyesType2() {
+    await $('.eye').find('span').css('border-right', '10px solid')
+}
+
+async function eyesType3() {
+    await $('.eye').find('span').css('border-top', '10px solid')
+}
+
+async function eyesType4() {
+    await $('.eye').find('span').css('border-bottom', '10px solid')
 }
 
 async function normaldecoration() {

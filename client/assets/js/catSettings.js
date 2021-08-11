@@ -105,3 +105,8 @@ $('#shadowColor').change(()=>{
     var colorVal = $('#shadowColor').val()
     shadowColor(colors[colorVal],colorVal)
 });
+
+$('#eyeShape').change(()=>{
+    var shapeVal = parseInt($('#eyeShape').val())
+    eyeVariation(shapeVal)
+});

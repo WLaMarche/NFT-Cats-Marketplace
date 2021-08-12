@@ -110,3 +110,8 @@ $('#eyeShape').change(()=>{
     var shapeVal = parseInt($('#eyeShape').val())
     eyeVariation(shapeVal)
 });
+
+$('#vibe').change(()=>{
+    var value = parseInt($('#vibe').val())
+    decorationVariation(value)
+});

@@ -106,19 +106,31 @@ function decorationVariation(num) {
 
         case 2:
             normaldecoration()
+<<<<<<< HEAD
             $('#vibeCode').html('Cross')
+=======
+            $('#vibeCode').html('Hell Yea')
+>>>>>>> f2effdd855ea53e138b4973a86ef2a03a25aeff8
             stomach2()
             break
 
         case 3:
             normaldecoration()
+<<<<<<< HEAD
             $('#vibeCode').html('X')
+=======
+            $('#vibeCode').html('Fuck No')
+>>>>>>> f2effdd855ea53e138b4973a86ef2a03a25aeff8
             stomach3()
             break
 
         case 4:
             normaldecoration()
+<<<<<<< HEAD
             $('#vibeCode').html('TBD')
+=======
+            $('#vibeCode').html('Fuck No')
+>>>>>>> f2effdd855ea53e138b4973a86ef2a03a25aeff8
             stomach4()
             break
     }

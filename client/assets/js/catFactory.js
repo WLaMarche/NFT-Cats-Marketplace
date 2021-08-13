@@ -106,31 +106,19 @@ function decorationVariation(num) {
 
         case 2:
             normaldecoration()
-<<<<<<< HEAD
             $('#vibeCode').html('Cross')
-=======
-            $('#vibeCode').html('Hell Yea')
->>>>>>> f2effdd855ea53e138b4973a86ef2a03a25aeff8
             stomach2()
             break
 
         case 3:
             normaldecoration()
-<<<<<<< HEAD
             $('#vibeCode').html('X')
-=======
-            $('#vibeCode').html('Fuck No')
->>>>>>> f2effdd855ea53e138b4973a86ef2a03a25aeff8
             stomach3()
             break
 
         case 4:
             normaldecoration()
-<<<<<<< HEAD
-            $('#vibeCode').html('TBD')
-=======
-            $('#vibeCode').html('Fuck No')
->>>>>>> f2effdd855ea53e138b4973a86ef2a03a25aeff8
+            $('#vibeCode').html('Message')
             stomach4()
             break
     }
@@ -203,8 +191,8 @@ async function stomach4() {
     'height': '40px',
     'border': '5px solid transparent',
     //'border-radius': '40% 30% 80% 50%',
-    'clip-path': 'none',
-    'content': '$'})
+    'clip-path': 'polygon(0% 0%, 100% 0%, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0% 75%)',
+    })
     //$('.cat__head-dots_first').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
     //$('.cat__head-dots_second').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
 }

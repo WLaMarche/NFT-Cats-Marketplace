@@ -1,0 +1,24 @@
+.movingTail{
+  animation: moveTail 3s infinite;
+}
+
+
+@keyframes moveTail {
+  /*define the move in a matter of percentages aka 0-100% = full movement */
+
+  /*deinfe what's going to happen at the start of the animation*/
+  0% {
+    /*head starts in normal position*/
+    transform: rotate(-45deg);
+  }
+
+  50% {
+    transform: rotate(-20deg);
+  }
+
+  /*define what the finishing position looks like */
+  100% {
+    transform: rotate(-45deg);
+  }
+
+}

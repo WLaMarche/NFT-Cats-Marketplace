@@ -283,12 +283,41 @@ async function stomach4() {
     //$('.cat__head-dots_second').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
 }
 
-function animationVariation(){
+function animationVariation(num){
   $('#dnaanimation').html(num)
   switch (num) {
+    //need to add the .movingTail class to a specific element
+    //jQuery --> find element you want to animate using an ID
       case 1:
-          animationType1()
+          resetAnimation();
+          $('#animationCode').html('None')
+          break
+      case 2:
+          resetAnimation();
           $('#animationCode').html('Test 1')
+          animation1()
+          break
+      case 3:
+          resetAnimation();
+          $('#animationCode').html('Test 2')
+          animation2()
           break
     }
+  }
+
+  async function animation1() {
+    //reset any animations to allow for new one to be implemented
+    resetAnimation();
+    //the 'tail' element is given an ID in index.html file
+    $('#tail').addClass('movingTail')
+  }
+
+  async function animation2() {
+    resetAnimation();
+    $('#head').addClass('movingTail')
+  }
+
+  function resetAnimation(){
+    $('#tail').removeClass('movingTail');
+    $('#head').removeClass('movingTail');
   }

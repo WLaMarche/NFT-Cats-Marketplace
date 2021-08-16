@@ -9,7 +9,7 @@
   /*deinfe what's going to happen at the start of the animation*/
   0% {
     /*head starts in normal position*/
-    transform: rotate(-45deg);
+    transform: rotate(-50deg);
   }
 
   50% {
@@ -18,7 +18,7 @@
 
   /*define what the finishing position looks like */
   100% {
-    transform: rotate(-45deg);
+    transform: rotate(-50deg);
   }
 
 }

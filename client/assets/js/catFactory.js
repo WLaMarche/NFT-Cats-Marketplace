@@ -72,32 +72,134 @@ function eyeVariation(num) {
     switch (num) {
         case 1:
             normalEyes()
-            $('#eyeShapeCode').html('Big')
+            $('#eyeShapeCode').html('Default')
             break
-
         case 2:
             normalEyes()
-            $('#eyeShapeCode').html('Cute')
-            eyesType1()
-            break
-
-        case 3:
-            normalEyes()
-            $('#eyeShapeCode').html('Chillin')
+            $('#eyeShapeCode').html('Big')
             eyesType2()
             break
-
-        case 4:
+        case 3:
             normalEyes()
-            $('#eyeShapeCode').html('Happy Pills')
+            $('#eyeShapeCode').html('Right')
             eyesType3()
             break
-
+        case 4:
+            normalEyes()
+            $('#eyeShapeCode').html('Night Vision')
+            eyesType4()
+            break
+        case 5:
+            normalEyes()
+            $('#eyeShapeCode').html('Chillin')
+            eyesType5()
+            break
+        case 6:
+            normalEyes()
+            $('#eyeShapeCode').html('Happy Pills')
+            eyesType6()
+            break
     }
 }
 
+async function normalEyes() {
+    //Remove all style from other decorations
+    //In this way we can also use normalDecoration() to reset the decoration style
+    await $('.pupils').css({'background-color': '#4DE1FF',
+    'border-radius': '50%',
+    'width': '30px',
+    'height': '25px',
+    'margin-left': '8px',
+    'margin-top': '3px',
+    'border-left': '10px solid',
+    'border-right': 'none',
+    'border-top': 'none',
+    'border-bottom': 'none',
+    'position': 'absolute'})
+}
+
+async function eyesType2() {
+    //Remove all style from other decorations
+    //In this way we can also use normalDecoration() to reset the decoration style
+    await $('.pupils').css({'background-color': '#4DE1FF',
+    'border-radius': '50%',
+    'width': '30px',
+    'height': '25px',
+    'margin-left': '8px',
+    'margin-top': '3px',
+    'border-left': 'none',
+    'border-right': 'none',
+    'border-top': 'none',
+    'border-bottom': 'none',
+    'position': 'absolute'})
+}
+
+async function eyesType3() {
+    //Remove all style from other decorations
+    //In this way we can also use normalDecoration() to reset the decoration style
+    await $('.pupils').css({'background-color': '#4DE1FF',
+    'border-radius': '50%',
+    'width': '30px',
+    'height': '25px',
+    'margin-left': '8px',
+    'margin-top': '3px',
+    'border-left': 'none',
+    'border-right': '10px solid',
+    'border-top': 'none',
+    'border-bottom': 'none',
+    'position': 'absolute'})
+}
+
+async function eyesType4() {
+    //Remove all style from other decorations
+    //In this way we can also use normalDecoration() to reset the decoration style
+    await $('.pupils').css({'background-color': '#4DE1FF',
+    'border-radius': '50%',
+    'width': '30px',
+    'height': '25px',
+    'margin-left': '8px',
+    'margin-top': '3px',
+    'border-left': '10px solid',
+    'border-right': '10px solid',
+    'border-top': 'none',
+    'border-bottom': 'none',
+    'position': 'absolute'})
+}
+
+async function eyesType5() {
+    //Remove all style from other decorations
+    //In this way we can also use normalDecoration() to reset the decoration style
+    await $('.pupils').css({'background-color': '#4DE1FF',
+    'border-radius': '50%',
+    'width': '30px',
+    'height': '25px',
+    'margin-left': '8px',
+    'margin-top': '3px',
+    'border-left': 'none',
+    'border-right': 'none',
+    'border-top': '10px solid',
+    'border-bottom': 'none',
+    'position': 'absolute'})
+}
+
+async function eyesType6() {
+    //Remove all style from other decorations
+    //In this way we can also use normalDecoration() to reset the decoration style
+    await $('.pupils').css({'background-color': '#4DE1FF',
+    'border-radius': '50%',
+    'width': '30px',
+    'height': '25px',
+    'margin-left': '8px',
+    'margin-top': '3px',
+    'border-left': 'none',
+    'border-right': 'none',
+    'border-top': 'none',
+    'border-bottom': '10px solid',
+    'position': 'absolute'})
+}
+
 function decorationVariation(num) {
-    $('#dnadecoration').html(num)
+    $('#dnaanimation').html(num)
     switch (num) {
         case 1:
             normaldecoration()
@@ -122,22 +224,6 @@ function decorationVariation(num) {
             stomach4()
             break
     }
-}
-
-async function normalEyes() {
-    await $('.eye').find('span').css('border', 'none')
-}
-
-async function eyesType1() {
-    await $('.eye').find('span').css('border-left', '10px solid')
-}
-
-async function eyesType2() {
-    await $('.eye').find('span').css('border-top', '10px solid')
-}
-
-async function eyesType3() {
-    await $('.eye').find('span').css('border-bottom', '10px solid')
 }
 
 async function normaldecoration() {
@@ -196,3 +282,13 @@ async function stomach4() {
     //$('.cat__head-dots_first').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
     //$('.cat__head-dots_second').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
 }
+
+function animationVariation(){
+  $('#dnaanimation').html(num)
+  switch (num) {
+      case 1:
+          animationType1()
+          $('#animationCode').html('Test 1')
+          break
+    }
+  }

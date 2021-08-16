@@ -300,6 +300,6 @@ body {
   border: 5px solid transparent;
   border-radius: 45%;
   z-index: 3;
-  transform: rotate(-45deg);
+  transform: rotate(-25deg);
   box-shadow: 8px 8px 4px #F6A6FC;
 }

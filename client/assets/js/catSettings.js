@@ -52,8 +52,6 @@ function getDna(){
     dna += $('#dnashadow').html()
     dna += $('#dnashape').html()
     dna += $('#dnadecoration').html()
-    dna += $('#dnadecorationMid').html()
-    dna += $('#dnadecorationSides').html()
     dna += $('#dnaanimation').html()
     dna += $('#dnaspecial').html()
 
@@ -114,4 +112,9 @@ $('#eyeShape').change(()=>{
 $('#vibe').change(()=>{
     var value = parseInt($('#vibe').val())
     decorationVariation(value)
+});
+
+$('#animations').change(()=>{
+    var animationValue = parseInt($('#animations').val())
+    animationVariation(animationValue)
 });

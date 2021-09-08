@@ -2,20 +2,18 @@
 var colors = Object.values(allColors())
 
 var defaultDNA = {
-    "headcolor" : 76,
-    "eyesColor" : 10,
-    "pupilsColor" : 75,
-    "earsColor" : 10,
-    "earTipsColor" : 10,
-    "tummyColor" : 10,
-    "pawColor" : 10,
-    "shadowColor" : 10,
+    "headcolor" : 58,
+    "eyescolor" : 24,
+    "pupilscolor" : 60,
+    "earColor" : 53,
+    "earTipColor" : 15,
+    "tummyColoring" : 35,
+    "pawColoring" : 43,
+    "shadowColoring" : 35,
     //Cattributes
-    "eyesShape" : 1,
+    "eyesShape" : 5,
     "decorationPattern" : 1,
-    "decorationMidcolor" : 13,
-    "decorationSidescolor" : 13,
-    "animation" :  1,
+    "animations" :  2,
     "lastNum" :  1
     }
 
@@ -23,18 +21,16 @@ var defaultDNA = {
 $( document ).ready(function() {
   $('#dnabody').html(defaultDNA.headColor);
   $('#dnaeyes').html(defaultDNA.eyesColor);
-  $('#dnapupils').html(defaultDNA.mouthColor);
+  $('#dnapupils').html(defaultDNA.pupilsColor);
   $('#dnaears').html(defaultDNA.earsColor);
   $('#dnaeartips').html(defaultDNA.earTipsColor);
   $('#dnatummy').html(defaultDNA.tummyColor);
   $('#dnapaws').html(defaultDNA.pawColor);
-  $('#dnashadow').html(defaultDNA.shdowColor);
+  $('#dnashadow').html(defaultDNA.shadowColor);
 
   $('#dnashape').html(defaultDNA.eyesShape)
   $('#dnadecoration').html(defaultDNA.decorationPattern)
-  $('#dnadecorationMid').html(defaultDNA.decorationMidcolor)
-  $('#dnadecorationSides').html(defaultDNA.decorationSidescolor)
-  $('#dnaanimation').html(defaultDNA.animation)
+  $('#dnaanimation').html(defaultDNA.animations)
   $('#dnaspecial').html(defaultDNA.lastNum)
 
   renderCat(defaultDNA)
@@ -61,6 +57,36 @@ function getDna(){
 function renderCat(dna){
     headColor(colors[dna.headcolor],dna.headcolor)
     $('#bodycolor').val(dna.headcolor)
+
+    eyesColor(colors[dna.eyescolor],dna.eyescolor)
+    $('#eyesColor').val(dna.eyescolor)
+
+    pupilsColor(colors[dna.pupilscolor],dna.pupilscolor)
+    $('#pupils').val(dna.pupilscolor)
+
+    earsColor(colors[dna.earColor],dna.earColor)
+    $('#pupils').val(dna.earColor)
+
+    earTipsColor(colors[dna.earTipColor],dna.earTipColor)
+    $('#earTipsColor').val(dna.earTipColor)
+
+    tummyColor(colors[dna.tummyColoring],dna.tummyColoring)
+    $('#tummyColor').val(dna.tummyColoring)
+
+    pawColor(colors[dna.pawColoring],dna.pawColoring)
+    $('#pawColor').val(dna.pawColoring)
+
+    shadowColor(colors[dna.shadowColoring],dna.shadowColoring)
+    $('#shadowColor').val(dna.shadowColoring)
+
+    eyeVariation(1)
+    $('#eyeShape').val(dna.eyesShape)
+
+    decorationVariation(1)
+    $('#vibe').val(dna.decorationPattern)
+
+    animationVariation(2)
+    $('#animations').val(dna.animations)
 }
 
 // Changing cat colors

@@ -199,7 +199,7 @@ async function eyesType6() {
 }
 
 function decorationVariation(num) {
-    $('#dnaanimation').html(num)
+    $('#dnadecoration').html(num)
     switch (num) {
         case 1:
             normaldecoration()

@@ -294,13 +294,18 @@ function animationVariation(num){
           break
       case 2:
           resetAnimation();
-          $('#animationCode').html('Test 1')
+          $('#animationCode').html('Wagging Tail')
           animation1()
           break
       case 3:
           resetAnimation();
-          $('#animationCode').html('Test 2')
+          $('#animationCode').html('Bulging Head')
           animation2()
+          break
+      case 4:
+          resetAnimation();
+          $('#animationCode').html('Happy Feet')
+          animation4()
           break
     }
   }
@@ -314,10 +319,29 @@ function animationVariation(num){
 
   async function animation2() {
     resetAnimation();
-    $('#head').addClass('movingTail')
+    $('#head').addClass('scalingHead')
   }
+
+  async function animation3() {
+    resetAnimation();
+    $('#pupilLeft').addClass('laserEyes');
+  }
+
+  async function animation4() {
+    resetAnimation();
+    $('#feet').addClass('dancingFeet1');
+    $('#feet1').addClass('dancingFeet');
+    $('#feet2').addClass('dancingFeet1');
+    $('#feet3').addClass('dancingFeet');
+  }
+
 
   function resetAnimation(){
     $('#tail').removeClass('movingTail');
-    $('#head').removeClass('movingTail');
+    $('#head').removeClass('scalingHead');
+    $('#eyes').removeClass('dancingFeet');
+    $('#feet').removeClass('dancingFeet1');
+    $('#feet1').removeClass('dancingFeet');
+    $('#feet2').removeClass('dancingFeet1');
+    $('#feet3').removeClass('dancingFeet');
   }

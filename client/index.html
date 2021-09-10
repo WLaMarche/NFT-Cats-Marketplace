@@ -18,11 +18,29 @@
 
 </head>
   <body>
-    <div class="container p-5" style="margin-top: 5vh;margin-bottom: 10vh;">
+
+    <div class="container p-5 " style="margin-top: 5vh;margin-bottom: 10vh;">
         <div align="center">
-        <h1 class="c-white">Kitties-Factory</h1>
+        <h1 style="font-family:verdana" class="c-white">Kitties-Factory</h1>
         <p class="c-white">Create your custom Kitty</p>
 
+    </div>
+
+    <div class="container p-2" style="margin-top: 1vh;margin-bottom: 2vh;">
+      <div align="center">
+
+        <button onclick="randomCatDNA()" type="button" class="btn btn-primary light-b-shadow m-2 ">
+          Create Random Kitty
+        </button>
+
+        <button onclick="renderCat(defaultDNA)" type="button" class="btn btn-primary light-b-shadow m-2 ">
+          Default Kitty
+        </button>
+
+        <button id='customKitty' type="button" class="btn btn-primary light-b-shadow m-2 ">
+          Submit Custom Kitty
+        </button>
+      </div>
     </div>
         <div class="row">
             <div class="col-lg-4 catBox m-2 light-b-shadow">
@@ -167,25 +185,6 @@
             </div>
 
             </div>
-
-            <div class="container p-2" style="margin-top: 1vh;margin-bottom: 10vh;">
-              <div align="center">
-
-                <button id='randomKitty' type="button" class="btn btn-primary light-b-shadow m-2 ">
-                  Create Random Kitty
-                </button>
-
-                <button onclick="renderCat(defaultDNA)" type="button" class="btn btn-primary light-b-shadow m-2 ">
-                  Default Kitty
-                </button>
-
-                <button id='customKitty' type="button" class="btn btn-primary light-b-shadow m-2 ">
-                  Submit Custom Kitty
-                </button>
-              </div>
-            </div>
-
-
 
 
             </div>

@@ -17,6 +17,26 @@ var defaultDNA = {
     "lastNum" :  1
     }
 
+
+    function getDna(){
+        var dna = ''
+        dna += $('#dnabody').html()
+        dna += $('#dnaeyes').html()
+        dna += $('#dnapupils').html()
+        dna += $('#dnaears').html()
+        dna += $('#dnaeartips').html()
+        dna += $('#dnatummy').html()
+        dna += $('#dnapaws').html()
+        dna += $('#dnashadow').html()
+        dna += $('#dnashape').html()
+        dna += $('#dnadecoration').html()
+        dna += $('#dnaanimation').html()
+        dna += $('#dnaspecial').html()
+
+        return parseInt(dna)
+    }
+
+
 // when page load
 $( document ).ready(function() {
   $('#dnabody').html(defaultDNA.headColor);
@@ -53,6 +73,8 @@ function getDna(){
 
     return parseInt(dna)
 }
+
+
 
 function renderCat(dna){
     headColor(colors[dna.headcolor],dna.headcolor)
@@ -144,3 +166,45 @@ $('#animations').change(()=>{
     var animationValue = parseInt($('#animations').val())
     animationVariation(animationValue)
 });
+
+var randomCatDNA = ( () => {
+
+    var headcolor = Math.floor(Math.random() * 89 ) + 1;
+    headColor(colors[headcolor], headcolor)
+
+    var eyescolor = Math.floor(Math.random() * 89 ) + 1
+    eyesColor(colors[eyescolor],eyescolor)
+
+    var pupilscolor = Math.floor(Math.random() * 89 ) + 1
+    pupilsColor(colors[pupilscolor],pupilscolor)
+
+    var earColor = Math.floor(Math.random() * 89 ) + 1
+    earsColor(colors[earColor],earColor)
+
+    var earTipColor = Math.floor(Math.random() * 89 ) + 1
+    earTipsColor(colors[earTipColor],earTipColor)
+
+    var tummyColoring = Math.floor(Math.random() * 89 ) + 1
+    tummyColor(colors[tummyColoring],tummyColoring)
+
+    var pawColoring = Math.floor(Math.random() * 89 ) + 1
+    pawColor(colors[pawColoring],pawColoring)
+
+
+    var shadowColoring = Math.floor(Math.random() * 89 ) + 1
+    shadowColor(colors[shadowColoring],shadowColoring)
+
+    //Cattributes
+    var eyesShape = Math.floor(Math.random() * 6 ) + 1
+    eyeVariation(eyesShape)
+
+    var decorationPattern = Math.floor(Math.random() * 4 ) + 1
+    decorationVariation(decorationPattern)
+
+    var animations =  Math.floor(Math.random() * 4 ) + 1
+    animationVariation(animations)
+
+    var lastNum =  Math.floor(Math.random() * 10 ) + 1
+
+    }
+)

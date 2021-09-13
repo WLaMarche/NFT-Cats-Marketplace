@@ -6,8 +6,8 @@ contract KittycontractNFT is IERC721 {
 
   event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
 
-  string public _tokenName = "Hello";
-  string public _tokenSymbol = "HI";
+  string public _tokenName = "WaterstoneKittys";
+  string public _tokenSymbol = "WSK";
 
   mapping(address => uint256) balances;
   mapping(uint256 => address) ownerOfNFT;

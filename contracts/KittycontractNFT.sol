@@ -1,10 +1,12 @@
 pragma solidity ^0.5.12;
 
 import "./IERC721.sol";
+import "./Ownable.sol";
 
-contract KittycontractNFT is IERC721 {
+contract KittycontractNFT is IERC721, Ownable {
 
   event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
+  event Birth(address _owner, _tokenID, uint256 momID, uint256 dadID, uint256 _genes);
 
   string public _tokenName = "WaterstoneKittys";
   string public _tokenSymbol = "WSK";
@@ -13,7 +15,7 @@ contract KittycontractNFT is IERC721 {
   mapping(uint256 => address) ownerOfNFT;
 
   struct Kittys {
-    uint256 gene;
+    uint256 genes;
     uint32 momID;
     uint32 dadID;
     uint64 birthTime;
@@ -74,14 +76,15 @@ contract KittycontractNFT is IERC721 {
   *
   * Emits a {Transfer} event.
   */
-  function transfer(address _to, uint256 _tokenId) external{
+  function transfer(address _to, uint256 _tokenId) external {
     require(_to != address(0), "ERC721: Transfer is to the 0 address!");
     require(_to != address(this), "ERC721: Transfer is not supported to this contract");
-    require(ownerOfNFT[_tokenId] == msg.sender, "ERC721: Sender does not own this NFT.");
+    require(owns(msg.sender, _tokenID), "ERC721: Sender does not own this NFT.");
 
     _transfer(msg.sender, _to, _tokenId);
 
   }
+
   function _transfer(address _from, address _to, uint256 _tokenID) internal {
     //increment balance of 'to' address + 1
     balances[_to] += 1;
@@ -98,5 +101,34 @@ contract KittycontractNFT is IERC721 {
     emit Transfer(_from, _to, _tokenID);
   }
 
+  function owns(address _from, tokenID) internal view returns(bool){
+    ownerOfNFT[tokenID] == msg.sender;
+  }
+
+  function createKittyGen0(uint256 _genes) public onlyOwner {
+
+      //use _createKitty()
+  }
+
+  function _createKitty(uint256 _momID, uint256 _dadID, uint256 _generation, uint256 _genes,address _owner) internal returns(uint256){
+
+      Kittys memory _kitty = Kittys({
+
+        momID: uint32(_momID),
+        dadID: uint32(_dadID),
+        generation: uint16(_generation),
+        genes: _genes,
+        birthtime: uint64(now)
+        });
+
+      uint256 newKittenID = kittys.push(_kitty) - 1;
+
+      _transfer(address(0), _owner, newKittenID)
+
+      emit Birth(_owner, newKittenID, _momID, _dadID, _genes)
+
+      return newKittenID;
+
+  }
 
 }

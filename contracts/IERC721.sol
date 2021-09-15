@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.8.0;
 /**
  * @dev Required interface of an ERC721 compliant contract.
  */
@@ -51,7 +51,7 @@ interface IERC721 {
      * - `to` cannot be the zero address.
      * - `to` can not be the contract address.
      * - `tokenId` token must be owned by `msg.sender`.
-     * 
+     *
      * Emits a {Transfer} event.
      */
     function transfer(address to, uint256 tokenId) external;

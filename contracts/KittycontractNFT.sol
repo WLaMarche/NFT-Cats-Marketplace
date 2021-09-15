@@ -1,18 +1,23 @@
-pragma solidity ^0.5.12;
+pragma solidity ^0.8.0;
 
 import "./IERC721.sol";
 import "./Ownable.sol";
 
 contract KittycontractNFT is IERC721, Ownable {
 
-  event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
-  event Birth(address _owner, _tokenID, uint256 momID, uint256 dadID, uint256 _genes);
+  event Birth(address _owner, uint256 _tokenID, uint256 momID, uint256 dadID, uint256 _genes);
 
   string public _tokenName = "WaterstoneKittys";
   string public _tokenSymbol = "WSK";
 
   mapping(address => uint256) balances;
   mapping(uint256 => address) ownerOfNFT;
+
+  //NFT creation limit
+  uint256 public constant gen0Limit = 10;
+
+  //NFT Gen0 limit
+  uint256 public gen0Counter;
 
   struct Kittys {
     uint256 genes;
@@ -29,7 +34,7 @@ contract KittycontractNFT is IERC721, Ownable {
   /**
    * @dev Returns the number of tokens in ``owner``'s account.
    */
-  function balanceOf(address owner) external view returns (uint256 balance){
+  function balanceOf(address owner) external view override returns (uint256 balance){
     //we need it to return a balance of an owner --> mapping
     return balances[owner]; //need to create a 'balances' mapping
   }
@@ -37,21 +42,21 @@ contract KittycontractNFT is IERC721, Ownable {
   /*
    * @dev Returns the total number of tokens in circulation.
    */
-  function totalSupply() external view returns (uint256 total){
+  function totalSupply() public view override returns (uint256 total){
     return _totalSupply;
   }
 
   /*
    * @dev Returns the name of the token.
    */
-  function name() external view returns (string memory tokenName){
+  function name() external view override returns (string memory tokenName){
     return _tokenName;
   }
 
   /*
    * @dev Returns the symbol of the token.
    */
-  function symbol() external view returns (string memory tokenSymbol){
+  function symbol() external view override returns (string memory tokenSymbol){
     return _tokenSymbol;
   }
 
@@ -62,7 +67,7 @@ contract KittycontractNFT is IERC721, Ownable {
    *
    * - `tokenId` must exist.
    */
-  function ownerOf(uint256 tokenId) external view returns (address owner){
+  function ownerOf(uint256 tokenId) external view override returns (address owner){
     return ownerOfNFT[tokenId];
   }
 
@@ -76,12 +81,12 @@ contract KittycontractNFT is IERC721, Ownable {
   *
   * Emits a {Transfer} event.
   */
-  function transfer(address _to, uint256 _tokenId) external {
+  function transfer(address _to, uint256 _tokenID) external override {
     require(_to != address(0), "ERC721: Transfer is to the 0 address!");
     require(_to != address(this), "ERC721: Transfer is not supported to this contract");
-    require(owns(msg.sender, _tokenID), "ERC721: Sender does not own this NFT.");
+    require(owns(msg.sender, _tokenID));
 
-    _transfer(msg.sender, _to, _tokenId);
+    _transfer(msg.sender, _to, _tokenID);
 
   }
 
@@ -101,13 +106,19 @@ contract KittycontractNFT is IERC721, Ownable {
     emit Transfer(_from, _to, _tokenID);
   }
 
-  function owns(address _from, tokenID) internal view returns(bool){
-    ownerOfNFT[tokenID] == msg.sender;
+  function owns(address _from, uint256 tokenID) internal view returns(bool){
+    return ownerOfNFT[tokenID] == _from;
   }
 
-  function createKittyGen0(uint256 _genes) public onlyOwner {
+  function createKittyGen0(uint256 _genes) public onlyOwner returns(uint256) {
+    //takes the genes that you send in from front send
+    //creates a new kitty for us with those specific genes
+    require(gen0Counter < gen0Limit);
 
-      //use _createKitty()
+    gen0Counter++;
+    //use _createKitty()
+
+    return _createKitty(0, 0, 0, _genes, address(this));
   }
 
   function _createKitty(uint256 _momID, uint256 _dadID, uint256 _generation, uint256 _genes,address _owner) internal returns(uint256){
@@ -118,14 +129,16 @@ contract KittycontractNFT is IERC721, Ownable {
         dadID: uint32(_dadID),
         generation: uint16(_generation),
         genes: _genes,
-        birthtime: uint64(now)
+        birthTime: uint64(block.timestamp)
         });
 
-      uint256 newKittenID = kittys.push(_kitty) - 1;
+      kittys.push(_kitty);
 
-      _transfer(address(0), _owner, newKittenID)
+      uint256 newKittenID = kittys.length - 1;
 
-      emit Birth(_owner, newKittenID, _momID, _dadID, _genes)
+      _transfer(address(0), _owner, newKittenID);
+
+      emit Birth(_owner, newKittenID, _momID, _dadID, _genes);
 
       return newKittenID;
 

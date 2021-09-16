@@ -7,10 +7,12 @@ contract KittycontractNFT is IERC721, Ownable {
 
   event Birth(address _owner, uint256 _tokenID, uint256 momID, uint256 dadID, uint256 _genes);
 
-  string public _tokenName = "WaterstoneKittys";
-  string public _tokenSymbol = "WSK";
+  string public constant _tokenName = "WaterstoneKittys";
+  string public constant _tokenSymbol = "WSK";
 
   mapping(address => uint256) balances;
+
+
   mapping(uint256 => address) ownerOfNFT;
 
   //NFT creation limit
@@ -29,8 +31,6 @@ contract KittycontractNFT is IERC721, Ownable {
 
   Kittys[] kittys;
 
-  uint _totalSupply = kittys.length;
-
   /**
    * @dev Returns the number of tokens in ``owner``'s account.
    */
@@ -43,7 +43,7 @@ contract KittycontractNFT is IERC721, Ownable {
    * @dev Returns the total number of tokens in circulation.
    */
   function totalSupply() public view override returns (uint256 total){
-    return _totalSupply;
+    return kittys.length;
   }
 
   /*
@@ -142,6 +142,17 @@ contract KittycontractNFT is IERC721, Ownable {
 
       return newKittenID;
 
+  }
+
+  function getKitty(uint256 tokenID) external view returns(uint256 genes, uint256 momID, uint256 dadID, uint256 birthTime, uint256 generation){
+
+    Kittys[] storage _kittys = kittys[tokenID];
+
+      genes = _kittys.genes;
+      momID =  uint256(_kittys.momID);
+      dadID =  uint256(_kittys.dadID);
+      birthTime = uint256(_kittys.birthTime);
+      generation = uint256(_kittys.generation);
   }
 
 }

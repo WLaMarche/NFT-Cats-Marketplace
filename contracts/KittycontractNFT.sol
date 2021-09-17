@@ -1,4 +1,5 @@
 pragma solidity ^0.8.0;
+pragma experimental ABIEncoderV2;
 
 import "./IERC721.sol";
 import "./Ownable.sol";
@@ -49,14 +50,14 @@ contract KittycontractNFT is IERC721, Ownable {
   /*
    * @dev Returns the name of the token.
    */
-  function name() external view override returns (string memory tokenName){
+  function name() external pure override returns (string memory tokenName){
     return _tokenName;
   }
 
   /*
    * @dev Returns the symbol of the token.
    */
-  function symbol() external view override returns (string memory tokenSymbol){
+  function symbol() external pure override returns (string memory tokenSymbol){
     return _tokenSymbol;
   }
 
@@ -144,15 +145,28 @@ contract KittycontractNFT is IERC721, Ownable {
 
   }
 
-  function getKitty(uint256 tokenID) external view returns(uint256 genes, uint256 momID, uint256 dadID, uint256 birthTime, uint256 generation){
+  function getKitty(uint256 tokenID) external view returns(uint, uint, uint, uint, uint){
 
-    Kittys[] storage _kittys = kittys[tokenID];
+    //Kittys[] storage _kittys = kittys[tokenID];
 
-      genes = _kittys.genes;
-      momID =  uint256(_kittys.momID);
-      dadID =  uint256(_kittys.dadID);
-      birthTime = uint256(_kittys.birthTime);
-      generation = uint256(_kittys.generation);
+      //genes = _kittys.genes;
+      //momID = _kittys.momID;
+      //dadID = _kittys.dadID;
+      //birthTime = _kittys.birthTime;
+      //generation = _kittys.generation;
+
+      Kittys storage kitties = kittys[tokenID];
+
+      return(
+        kitties.genes,
+        kitties.momID,
+        kitties.dadID,
+        kitties.birthTime,
+        kitties.generation
+        );
+
+
+
   }
 
 }

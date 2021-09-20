@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
   <script src="assets/bootstrap/js/popper.js"></script>
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/js/web3.min.js"></script>
+  <script src="./abi.js"></script>
 
   <link rel="stylesheet" href="assets/css/mystyle.css">
   <link rel="stylesheet" href="assets/css/cats.css">
@@ -37,7 +39,7 @@
           Default Kitty
         </button>
 
-        <button id='customKitty' type="button" class="btn btn-primary light-b-shadow m-2 ">
+        <button id='customKitty' style="background-color: teal" type="button" class="btn btn-primary light-b-shadow m-2 ">
           Submit Custom Kitty
         </button>
       </div>
@@ -199,6 +201,13 @@
     </footer>
 
   </body>
+
+  <!--
+    ./index.js is placed at the bottom of the index.html file because
+    this script includes clickHandlers in jQuery on certain elements... in order for this to work
+    this script needs to be rendered AFTER the buttons on rendered
+  -->
+  <script src="./index.js"></script>
 
   <script src="assets/js/colors.js"></script>
   <script src="assets/js/catSettings.js"></script>

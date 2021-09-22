@@ -13,8 +13,7 @@ var defaultDNA = {
     //Cattributes
     "eyesShape" : 5,
     "decorationPattern" : 1,
-    "animations" :  2,
-    "lastNum" :  1
+    "animations" :  2
     }
 
 
@@ -31,7 +30,6 @@ var defaultDNA = {
         dna += $('#dnashape').html()
         dna += $('#dnadecoration').html()
         dna += $('#dnaanimation').html()
-        dna += $('#dnaspecial').html()
 
         return parseInt(dna)
     }
@@ -51,7 +49,6 @@ $( document ).ready(function() {
   $('#dnashape').html(defaultDNA.eyesShape)
   $('#dnadecoration').html(defaultDNA.decorationPattern)
   $('#dnaanimation').html(defaultDNA.animations)
-  $('#dnaspecial').html(defaultDNA.lastNum)
 
   renderCat(defaultDNA)
 });
@@ -69,7 +66,7 @@ function getDna(){
     dna += $('#dnashape').html()
     dna += $('#dnadecoration').html()
     dna += $('#dnaanimation').html()
-    dna += $('#dnaspecial').html()
+
 
     return parseInt(dna)
 }

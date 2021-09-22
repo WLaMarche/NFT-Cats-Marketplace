@@ -122,14 +122,14 @@ contract KittycontractNFT is IERC721, Ownable {
     return _createKitty(0, 0, 0, _genes, address(this));
   }
 
-  function _createKitty(uint256 _momID, uint256 _dadID, uint256 _generation, uint256 _genes,address _owner) internal returns(uint256){
+  function _createKitty(uint256 _momID, uint256 _dadID, uint256 _generation, uint256 _genes, address _owner) internal returns(uint256){
 
       Kittys memory _kitty = Kittys({
 
         momID: uint32(_momID),
         dadID: uint32(_dadID),
         generation: uint16(_generation),
-        genes: _genes,
+        genes: uint256(_genes),
         birthTime: uint64(block.timestamp)
         });
 

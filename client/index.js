@@ -28,27 +28,36 @@ $(document).ready(function(){
     user = accounts[0]
 
     console.log(instance);
-
-    //dev -->
-    //*
-    //'methods' is part of what is in console.log() from ^... contains contract's functions to call
-      //.send() contains callBack, which is an unused options object{} &
-        //a function that is the callback.. arg1 is always an error, arg2 is txnHash for successful txn
-    //*
-    //THIS IS NOT the proper place to put this function...
-    //*
-    //this needs to be imp[lemented so that the button works in our actual application
-      //needs to go into some other function --> need to create a clickHandler() on the submit kitty button
-        //so that this function is executed & sends the transaction
-          //--> have a 'confirmation' that tells the user it's been submitted
-    //use getDNA function in catSettings
-    instance.methods.createKittyGen0(dnaStr).send({}, function(error, txnHash){
-      if(error){
-        console.log('error');
-      }
-      else{
-        console.log(txnHash);
-      }
-    })
-  })
+  });
 });
+
+//dev -->
+//*
+//'methods' is part of what is in console.log() from ^... contains contract's functions to call
+  //.send() contains callBack, which is an unused options object{} &
+    //a function that is the callback.. arg1 is always an error, arg2 is txnHash for successful txn
+//*
+//THIS IS NOT the proper place to put this function...
+//*
+//this needs to be implemented so that the button works in our actual application
+  //needs to go into some other function --> need to create a clickHandler() on the submit kitty button
+    //so that this function is executed & sends the transaction
+      //--> have a 'confirmation' that tells the user it's been submitted
+//use getDNA function in catSettings
+function customKittyClicked(){
+
+
+  var dnaStr = getDna();
+
+  instance.methods.createKittyGen0(dnaStr).send({}, function(error, txHash){
+    if(err){
+      console.log('error');
+      alert('Oops. There was an error sending your NFT to the blockchain.');
+    }
+    else{
+      console.log(txHash);
+      alert('Congratulations! Your NFT successfully created!');
+    }
+  });
+
+}

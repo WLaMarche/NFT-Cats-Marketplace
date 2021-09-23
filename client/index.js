@@ -10,7 +10,7 @@ var web3 = new Web3(Web3.givenProvider);
 
 var instance; //contract instance
 var user; //defines our user
-var contractAddress = '0xe2b23e0e4353A301150fCA33198cE3490c4c524c'; //defines our contract Address here
+var contractAddress = '0xd0f8460bCf01345e55178B791fB08b822e84c4D7'; //defines our contract Address here
 
 //whenever the page is done loading...
 $(document).ready(function(){
@@ -25,10 +25,11 @@ $(document).ready(function(){
     //instance represents the contract being called
     //'abi' is a specification of what our contract does
     instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]})
-    user = accounts[0]
+    user = accounts[0];
 
     console.log(instance);
   });
+
 });
 
 //dev -->
@@ -46,10 +47,14 @@ $(document).ready(function(){
 //use getDNA function in catSettings
 function customKittyClicked(){
 
+  window.ethereum.enable().then(function(accounts){
 
   var dnaStr = getDna();
+  var toString = dnaStr.toString();
 
-  instance.methods.createKittyGen0(dnaStr).send({}, function(error, txHash){
+  instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]});
+
+  instance.methods.createKittyGen0(toString).send({}, function(err, txHash){
     if(err){
       console.log('error');
       alert('Oops. There was an error sending your NFT to the blockchain.');
@@ -60,4 +65,5 @@ function customKittyClicked(){
     }
   });
 
+});
 }

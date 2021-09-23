@@ -31,7 +31,8 @@ var defaultDNA = {
         dna += $('#dnadecoration').html()
         dna += $('#dnaanimation').html()
 
-        return parseInt(dna)
+        return parseInt(dna);
+
     }
 
 

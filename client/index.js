@@ -10,7 +10,7 @@ var web3 = new Web3(Web3.givenProvider);
 
 var instance; //contract instance
 var user; //defines our user
-var contractAddress = '0xd0f8460bCf01345e55178B791fB08b822e84c4D7'; //defines our contract Address here
+var contractAddress = '0xB4E1d35d5caDF02931a149BFcf8330fa80c86fc4'; //defines our contract Address here
 
 //whenever the page is done loading...
 $(document).ready(function(){
@@ -45,14 +45,19 @@ $(document).ready(function(){
     //so that this function is executed & sends the transaction
       //--> have a 'confirmation' that tells the user it's been submitted
 //use getDNA function in catSettings
+//we need to call MetaMask's enable function (like a login Prompt)
+
 function customKittyClicked(){
 
   window.ethereum.enable().then(function(accounts){
 
   var dnaStr = getDna();
   var toString = dnaStr.toString();
+  //getAccount();
 
-  instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]});
+  instance = new web3.eth.Contract(abi, contractAddress, {
+    from: accounts[0]
+    })
 
   instance.methods.createKittyGen0(toString).send({}, function(err, txHash){
     if(err){
@@ -64,6 +69,5 @@ function customKittyClicked(){
       alert('Congratulations! Your NFT successfully created!');
     }
   });
-
 });
 }

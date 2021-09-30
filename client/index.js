@@ -57,7 +57,7 @@ function customKittyClicked(){
 
   instance = new web3.eth.Contract(abi, contractAddress, {
     from: accounts[0]
-    })
+  });
 
   instance.methods.createKittyGen0(toString).send({}, function(err, txHash){
     if(err){
@@ -65,9 +65,27 @@ function customKittyClicked(){
       alert('Oops. There was an error sending your NFT to the blockchain.');
     }
     else{
+      var event = instance.events.Birth;
+      var receipt = 'New NFT event log encountered an error.';
+
       console.log(txHash);
       alert('Congratulations! Your NFT successfully created!');
+
+      instance.events.Birth({
+        fromBlock: 'latest'
+        }, function(error, event){ console.log(event); })
+        .on('data', function(event){
+            console.log(event); // same results as the optional callback above
+        })
+        .on('error', function(error, receipt) { // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
+            console.log(receipt);
+        });
     }
   });
-});
 }
+
+);
+}
+
+
+  //listen for birth event, if event listener fires, alert info across screen

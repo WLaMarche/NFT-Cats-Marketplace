@@ -10,7 +10,7 @@ var web3 = new Web3(Web3.givenProvider);
 
 var instance; //contract instance
 var user; //defines our user
-var contractAddress = '0xB4E1d35d5caDF02931a149BFcf8330fa80c86fc4'; //defines our contract Address here
+var contractAddress = '0xcAD4aedF32E17B362B22cb74F5DEe17dd8d7666E'; //defines our contract Address here
 
 //whenever the page is done loading...
 $(document).ready(function(){
@@ -73,9 +73,10 @@ function customKittyClicked(){
 
       instance.events.Birth({
         fromBlock: 'latest'
-        }, function(error, event){ console.log(event); })
+        }, function(error, event){ })
         .on('data', function(event){
-            console.log(event); // same results as the optional callback above
+            console.log(event);
+            alert(instance.events.Birth); // same results as the optional callback above
         })
         .on('error', function(error, receipt) { // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
             console.log(receipt);

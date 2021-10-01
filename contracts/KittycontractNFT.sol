@@ -6,7 +6,7 @@ import "./Ownable.sol";
 
 contract KittycontractNFT is IERC721, Ownable {
 
-  event Birth(address _owner, uint256 _tokenID, uint256 momID, uint256 dadID, uint256 _genes, uint blockStamp);
+  event Birth(address _owner, uint256 _tokenID, uint256 momID, uint256 dadID, uint256 _genes);
 
   string public constant _tokenName = "WaterstoneKittys";
   string public constant _tokenSymbol = "WSK";
@@ -23,14 +23,11 @@ contract KittycontractNFT is IERC721, Ownable {
   uint256 public gen0Counter;
 
   struct Kittys {
-
+    uint256 genes;
     uint32 momID;
     uint32 dadID;
-    uint256 genes;
-    uint16 generation;
     uint64 birthTime;
-    address owner;
-
+    uint16 generation;
   }
 
   Kittys[] kittys;
@@ -114,7 +111,7 @@ contract KittycontractNFT is IERC721, Ownable {
     return ownerOfNFT[tokenID] == _from;
   }
 
-  function createKittyGen0(uint256 _genes) public  returns(uint256) {
+  function createKittyGen0(uint256 _genes) public returns(uint256) {
     //takes the genes that you send in from front send
     //creates a new kitty for us with those specific genes
     require(gen0Counter < gen0Limit);
@@ -122,10 +119,10 @@ contract KittycontractNFT is IERC721, Ownable {
     gen0Counter++;
     //use _createKitty()
 
-    return _createKitty(0, 0, 0, _genes, block.timestamp, msg.sender);
+    return _createKitty(0, 0, 0, _genes, msg.sender);
   }
 
-  function _createKitty(uint256 _momID, uint256 _dadID, uint256 _generation, uint256 _genes, uint256 _birthTime, address _owner) internal returns(uint256){
+  function _createKitty(uint256 _momID, uint256 _dadID, uint256 _generation, uint256 _genes, address _owner) internal returns(uint256){
 
       Kittys memory _kitty = Kittys({
 
@@ -133,8 +130,7 @@ contract KittycontractNFT is IERC721, Ownable {
         dadID: uint32(_dadID),
         generation: uint16(_generation),
         genes: uint256(_genes),
-        birthTime: uint64(_birthTime),
-        owner: _owner
+        birthTime: uint64(block.timestamp)
         });
 
       kittys.push(_kitty);
@@ -143,7 +139,7 @@ contract KittycontractNFT is IERC721, Ownable {
 
       _transfer(address(0), _owner, newKittenID);
 
-      emit Birth(_owner, newKittenID, _momID, _dadID, _genes, _birthTime);
+      emit Birth(_owner, newKittenID, _momID, _dadID, _genes);
 
       return newKittenID;
 

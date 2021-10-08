@@ -10,7 +10,7 @@ var web3 = new Web3(Web3.givenProvider);
 
 var instance; //contract instance
 var user; //defines our user
-var contractAddress = '0xcAD4aedF32E17B362B22cb74F5DEe17dd8d7666E'; //defines our contract Address here
+var contractAddress = '0xdA2ed94C8F571433E8Db331D8838Ff3CD1FAaBEe'; //defines our contract Address here
 
 //whenever the page is done loading...
 $(document).ready(function(){
@@ -69,14 +69,23 @@ function customKittyClicked(){
       var receipt = 'New NFT event log encountered an error.';
 
       console.log(txHash);
-      alert('Congratulations! Your NFT successfully created!');
 
       instance.events.Birth({
         fromBlock: 'latest'
         }, function(error, event){ })
         .on('data', function(event){
             console.log(event);
-            alert(instance.events.Birth); // same results as the optional callback above
+
+            //Birth event information upon alert
+            let nftOwner = event.returnValues._owner;
+            let nftMother = event.returnValues.momID;
+            let nftFather = event.returnValues.dadID;
+            let nftTokenID = event.returnValues._tokenID;
+            let nftGenes = event.returnValues._genes;
+
+            alert('Congratulations! Your kitty NFT has been successfully created! NFT owner: ' + "\n" +
+            nftOwner + 'NFT ID: ' + nftTokenID + ', Kittys mother: ' + nftMother + '. Kittys father: ' +
+            nftFather + '; Kittys DNA: ' + nftGenes); // same results as the optional callback above
         })
         .on('error', function(error, receipt) { // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
             console.log(receipt);

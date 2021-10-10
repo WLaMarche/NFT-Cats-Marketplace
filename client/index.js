@@ -84,7 +84,7 @@ function customKittyClicked(){
             let nftGenes = event.returnValues._genes;
 
             swal("Congratulations!", "Your kitty NFT has been successfully created!\n\n Kitty details:\n\n  NFT ID: " +
-            nftTokenID + "\n Kitty Owner: " + nftOwner + "\n Kitty genes: " + nftGenes +  "\n Kitty mother: " + nftMother + "\n Kitty father: " + nftFather, "success"); // same results as the optional callback above
+            nftTokenID + "\nKitty Owner: " + nftOwner + "\nKitty genes: " + nftGenes +  "\nKitty mother: " + nftMother + "\nKitty father: " + nftFather, "success"); // same results as the optional callback above
         })
         .on('error', function(error, receipt) { // If the transaction was rejected by the network with a receipt, the second parameter will be the receipt.
             console.log(receipt);

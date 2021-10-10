@@ -114,7 +114,7 @@ contract KittycontractNFT is IERC721, Ownable {
   function createKittyGen0(uint256 _genes) public returns(uint256) {
     //takes the genes that you send in from front send
     //creates a new kitty for us with those specific genes
-    require(gen0Counter < gen0Limit);
+    require(gen0Counter <= gen0Limit);
 
     gen0Counter++;
     //use _createKitty()

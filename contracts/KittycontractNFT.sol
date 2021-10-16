@@ -164,7 +164,27 @@ contract KittycontractNFT is IERC721, Ownable {
         kitties.birthTime,
         kitties.generation
         );
-
   }
+
+    /// @notice Change or reaffirm the approved address for an NFT
+    /// @dev The zero address indicates there is no approved address.
+    /// Throws unless `msg.sender` is the current NFT owner, or an authorized
+    /// operator of the current owner.
+    /// @param _approved The new approved NFT controller
+    /// @param _tokenId The NFT to approve
+  function approve(address _approved, uint256 _tokenId) external override {
+    //takes a single NFT and gives approval to another address to move
+
+    //require NFT exists
+    //approvee receiver is NOT address 0
+
+
+    _approve(msg.sender, _approved, _tokenId);
+  }
+
+  function _approve(address _owner, address _approved, uint256 _tokenId) internal {
+    //require 'msg.sender' is owner of selected NFT
+  }
+
 
 }

@@ -11,10 +11,13 @@ contract KittycontractNFT is IERC721, Ownable {
   string public constant _tokenName = "WaterstoneKittys";
   string public constant _tokenSymbol = "WSK";
 
+  //mapping of NFT balance for address
   mapping(address => uint256) balances;
-
-
+  //mapping of specific NFT owned by address
   mapping(uint256 => address) ownerOfNFT;
+  //mapping of NFT that gives approval access to other addresses
+  mapping(uint256 => address) nftApprovals;
+
 
   //NFT creation limit
   uint256 public constant gen0Limit = 10;
@@ -174,16 +177,16 @@ contract KittycontractNFT is IERC721, Ownable {
     /// @param _tokenId The NFT to approve
   function approve(address _approved, uint256 _tokenId) external override {
     //takes a single NFT and gives approval to another address to move
-
-    //require NFT exists
-    //approvee receiver is NOT address 0
-
+    require(_approved != address(0), "ERC721: Transfer is to the 0 address!");
+    require(owns(msg.sender, _tokenId));
 
     _approve(msg.sender, _approved, _tokenId);
+    emit Approval(msg.sender, _approved, _tokenId);
+
   }
 
   function _approve(address _owner, address _approved, uint256 _tokenId) internal {
-    //require 'msg.sender' is owner of selected NFT
+    nftApprovals[_tokenId][_approved];
   }
 
 

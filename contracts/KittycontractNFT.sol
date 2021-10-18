@@ -182,16 +182,38 @@ contract KittycontractNFT is IERC721, Ownable {
     require(_approved != address(0), "ERC721: Transfer is to the 0 address!");
     require(owns(msg.sender, _tokenId));
 
-    _approve(msg.sender, _approved, _tokenId);
+    _approve(_approved, _tokenId);
 
 
   }
 
-  function _approve(address _owner, address _approved, uint256 _tokenId) internal {
+  function _approve(address _approved, uint256 _tokenId) internal {
 
     nftApprovals[_tokenId] = _approved;
 
     emit Approval(msg.sender, _approved, _tokenId);
+  }
+
+  /// @notice Enable or disable approval for a third party ("operator") to manage
+  ///  all of `msg.sender`'s assets
+  /// @dev Emits the ApprovalForAll event. The contract MUST allow
+  ///  multiple operators per owner.
+  /// @param _operator Address to add to the set of authorized operators
+  /// @param _approved True if the operator is approved, false to revoke approval
+  function setApprovalForAll(address _operator, bool _approved) external override{
+    require(_operator != address(0), "ERC721: Transfer is to the 0 address!");
+
+    approvalforAll[msg.sender][_operator] = true;
+
+    emit ApprovalForAll(msg.sender, _operator, true);
+  }
+
+  /// @notice Query if an address is an authorized operator for another address
+  /// @param _owner The address that owns the NFTs
+  /// @param _operator The address that acts on behalf of the owner
+  /// @return True if `_operator` is an approved operator for `_owner`, false otherwise
+  function isApprovedForAll(address _owner, address _operator) external override view returns (bool){
+    
   }
 
 

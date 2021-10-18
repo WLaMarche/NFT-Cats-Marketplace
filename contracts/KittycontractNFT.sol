@@ -17,7 +17,9 @@ contract KittycontractNFT is IERC721, Ownable {
   mapping(uint256 => address) ownerOfNFT;
   //mapping of NFT that gives approval access to other addresses
   mapping(uint256 => address) nftApprovals;
-
+  //owner address that grants full approval of assets to another addresses
+  mapping(address => mapping(address => bool)) private approvalforAll;
+  //approvalforAll[msg.sender][msg.receiver] = true;
 
   //NFT creation limit
   uint256 public constant gen0Limit = 10;
@@ -181,12 +183,15 @@ contract KittycontractNFT is IERC721, Ownable {
     require(owns(msg.sender, _tokenId));
 
     _approve(msg.sender, _approved, _tokenId);
-    emit Approval(msg.sender, _approved, _tokenId);
+
 
   }
 
   function _approve(address _owner, address _approved, uint256 _tokenId) internal {
-    nftApprovals[_tokenId][_approved];
+
+    nftApprovals[_tokenId] = _approved;
+
+    emit Approval(msg.sender, _approved, _tokenId);
   }
 
 

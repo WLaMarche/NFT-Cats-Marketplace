@@ -200,7 +200,8 @@ contract KittycontractNFT is IERC721, Ownable {
   ///  multiple operators per owner.
   /// @param _operator Address to add to the set of authorized operators
   /// @param _approved True if the operator is approved, false to revoke approval
-  function setApprovalForAll(address _operator, bool _approved) external override{
+  function setApprovalForAll(address _operator, bool _approved) external override {
+
     require(_operator != address(0), "ERC721: Transfer is to the 0 address!");
 
     approvalforAll[msg.sender][_operator] = true;
@@ -213,7 +214,29 @@ contract KittycontractNFT is IERC721, Ownable {
   /// @param _operator The address that acts on behalf of the owner
   /// @return True if `_operator` is an approved operator for `_owner`, false otherwise
   function isApprovedForAll(address _owner, address _operator) external override view returns (bool){
-    
+
+    if(approvalforAll[_owner][_operator] == true){
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  /// @notice Get the approved address for a single NFT
+  /// @dev Throws if `_tokenId` is not a valid NFT.
+  /// @param _tokenId The NFT to find the approved address for
+  /// @return The approved address for this NFT, or the zero address if there is none
+  function getApproved(uint256 _tokenId) external override view returns (address){
+
+    if(Kitty[_tokenId] == true){
+      address nftAddress = nftApprovals[_tokenId];
+        if(nftAddress == address(0)){
+          return address(0);
+        }
+      return nftAddress;
+    }
+
   }
 
 

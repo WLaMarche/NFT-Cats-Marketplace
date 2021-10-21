@@ -15,7 +15,7 @@ contract KittycontractNFT is IERC721, Ownable {
   mapping(address => uint256) balances;
   //mapping of specific NFT owned by address
   mapping(uint256 => address) ownerOfNFT;
-  //mapping of NFT that gives approval access to other addresses
+  //mapping of NFT that gives approval access to another address
   mapping(uint256 => address) public nftApprovals;
   //owner address that grants full approval of assets to another addresses
   mapping(address => mapping(address => bool)) private operatorApproval;
@@ -237,8 +237,29 @@ contract KittycontractNFT is IERC721, Ownable {
         return nftApprovals[_tokenId];
       }
     }
-
   }
 
+  /// @notice Transfer ownership of an NFT -- THE CALLER IS RESPONSIBLE
+  ///  TO CONFIRM THAT `_to` IS CAPABLE OF RECEIVING NFTS OR ELSE
+  ///  THEY MAY BE PERMANENTLY LOST
+  /// @dev Throws unless `msg.sender` is the current owner, an authorized
+  ///  operator, or the approved address for this NFT. Throws if `_from` is
+  ///  not the current owner. Throws if `_to` is the zero address. Throws if
+  ///  `_tokenId` is not a valid NFT.
+  /// @param _from The current owner of the NFT
+  /// @param _to The new owner
+  /// @param _tokenId The NFT to transfer
+  function transferFrom(address _from, address _to, uint256 _tokenId) external override {
+    require( owns(msg.sender, _tokenId) ||
+    operatorApproval[_from][msg.sender] == true ||
+    nftApprovals[_tokenId] == msg.sender, "ERC721: Permission to transfer not granted from your address");
 
+    require(ownerOfNFT[_tokenId] == _from);
+    require(_to != address(0), "ERC721: Transfer cannot go to the 0 address!");
+    require(_tokenId < kittys.length);
+
+
+    _transfer(_from, _to, _tokenID);
+
+  }
 }

@@ -107,6 +107,7 @@ contract KittycontractNFT is IERC721, Ownable {
     //decrement the balance of the '_from' address by - 1
     if(_from != address(0)){
       balances[_from] -= 1;
+      delete nftApprovals[_tokenID];
     }
 
     emit Transfer(_from, _to, _tokenID);

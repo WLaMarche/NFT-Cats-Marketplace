@@ -16,9 +16,9 @@ contract KittycontractNFT is IERC721, Ownable {
   //mapping of specific NFT owned by address
   mapping(uint256 => address) ownerOfNFT;
   //mapping of NFT that gives approval access to other addresses
-  mapping(uint256 => address) nftApprovals;
+  mapping(uint256 => address) public nftApprovals;
   //owner address that grants full approval of assets to another addresses
-  mapping(address => mapping(address => bool)) private approvalforAll;
+  mapping(address => mapping(address => bool)) private operatorApproval;
   //approvalforAll[msg.sender][msg.receiver] = true;
 
   //NFT creation limit
@@ -184,14 +184,13 @@ contract KittycontractNFT is IERC721, Ownable {
 
     _approve(_approved, _tokenId);
 
-
+    emit Approval(msg.sender, _approved, _tokenId);
   }
 
   function _approve(address _approved, uint256 _tokenId) internal {
 
     nftApprovals[_tokenId] = _approved;
 
-    emit Approval(msg.sender, _approved, _tokenId);
   }
 
   /// @notice Enable or disable approval for a third party ("operator") to manage
@@ -202,11 +201,11 @@ contract KittycontractNFT is IERC721, Ownable {
   /// @param _approved True if the operator is approved, false to revoke approval
   function setApprovalForAll(address _operator, bool _approved) external override {
 
-    require(_operator != address(0), "ERC721: Transfer is to the 0 address!");
+    require(_operator != msg.sender, "ERC721: Cannot *approve* your own address!");
 
-    approvalforAll[msg.sender][_operator] = true;
+    operatorApproval[msg.sender][_operator] = _approved;
 
-    emit ApprovalForAll(msg.sender, _operator, true);
+    emit ApprovalForAll(msg.sender, _operator, _approved);
   }
 
   /// @notice Query if an address is an authorized operator for another address
@@ -215,7 +214,7 @@ contract KittycontractNFT is IERC721, Ownable {
   /// @return True if `_operator` is an approved operator for `_owner`, false otherwise
   function isApprovedForAll(address _owner, address _operator) external override view returns (bool){
 
-    if(approvalforAll[_owner][_operator] == true){
+    if(operatorApproval[_owner][_operator] == true){
       return true;
     }
     else {
@@ -229,12 +228,13 @@ contract KittycontractNFT is IERC721, Ownable {
   /// @return The approved address for this NFT, or the zero address if there is none
   function getApproved(uint256 _tokenId) external override view returns (address){
 
-    if(Kitty[_tokenId] == true){
-      address nftAddress = nftApprovals[_tokenId];
-        if(nftAddress == address(0)){
+    if(_tokenId < kittys.length){
+        if(nftApprovals[_tokenId] == address(0)) {
           return address(0);
         }
-      return nftAddress;
+      else{
+        return nftApprovals[_tokenId];
+      }
     }
 
   }

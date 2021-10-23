@@ -3,6 +3,7 @@ pragma experimental ABIEncoderV2;
 
 import "./IERC721.sol";
 import "./Ownable.sol";
+import "./IERC721Receiver.sol";
 
 contract KittycontractNFT is IERC721, Ownable {
 
@@ -259,7 +260,40 @@ contract KittycontractNFT is IERC721, Ownable {
     require(_tokenId < kittys.length);
 
 
-    _transfer(_from, _to, _tokenID);
+    _transfer(_from, _to, _tokenId);
 
+  }
+
+  //part of safeTransferFrom(), CHECKS to make sure token destination supports NFT
+  function _safeTransfer(address _from, address _to, uint256 _tokenId, bytes calldata data) internal {
+    _transfer(_from, _to, _tokenID);
+    //CHECK if created func '_checkERC721Support' returns boolean true
+    require( _checkERC721Support(_from, _to, _tokenId, data) );
+  }
+
+  //calls _to contract to see if it supports ERC721 token standard
+  function _checkERC721Support(address _from, address _to, uint256 _tokenId, bytes memory data) internal returns(bool){
+    //call created func 'isContract' with param _to to check if it's a contract
+    if( !_isContract(_to) ){
+      //if NOT a contract, we know it's a wallet --> ERC wallets can support NFTs
+      return true;
+    }
+
+    //if it IS a contract, call onERC721Received
+      //(standard func that contracts must have if they want to
+        //be interoperable with NFTs)
+    //CHECK RETURN VALUE of onERC721Received ^^
+
+    //created an interface contract to make a call to an external contract
+      //how do call an external contract if you only know the address & 1 function
+      //.. make an interface contract.. 'IERC721Receiver'
+    //create a bytes variable that captures value of external call and tests if it's true
+    bytes4 returnData = IERC721Receiver(_to).onERC721Received(msg.sender, _to, _tokenId, data);
+    if(returnData == bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"))){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 }

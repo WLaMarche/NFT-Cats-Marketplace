@@ -266,7 +266,7 @@ contract KittycontractNFT is IERC721, Ownable {
 
   //part of safeTransferFrom(), CHECKS to make sure token destination supports NFT
   function _safeTransfer(address _from, address _to, uint256 _tokenId, bytes calldata data) internal {
-    _transfer(_from, _to, _tokenID);
+    _transfer(_from, _to, _tokenId);
     //CHECK if created func '_checkERC721Support' returns boolean true
     require( _checkERC721Support(_from, _to, _tokenId, data) );
   }
@@ -288,12 +288,24 @@ contract KittycontractNFT is IERC721, Ownable {
       //how do call an external contract if you only know the address & 1 function
       //.. make an interface contract.. 'IERC721Receiver'
     //create a bytes variable that captures value of external call and tests if it's true
-    bytes4 returnData = IERC721Receiver(_to).onERC721Received(msg.sender, _to, _tokenId, data);
-    if(returnData == bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"))){
-      return true;
-    }
     else{
-      return false;
+      bytes4 returnData = IERC721Receiver(_to).onERC721Received(msg.sender, _from, _tokenId, data);
+
+      if(returnData == bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"))){
+        return true;
+      }
+      else{
+        return false;
+      }
     }
+  }
+
+  function _isContract(address _to) view internal returns(bool){
+    //if it calls a wallet, code size = 0... if it's a contract, code size > 1
+    uint32 size;
+    assembly{
+      size := extcodesize(_to)
+    }
+    return size > 0;
   }
 }

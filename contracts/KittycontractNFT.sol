@@ -264,6 +264,22 @@ contract KittycontractNFT is IERC721, Ownable {
 
   }
 
+  function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes calldata data) external override {
+    require( owns(msg.sender, _tokenId) ||
+    operatorApproval[_from][msg.sender] == true ||
+    nftApprovals[_tokenId] == msg.sender, "ERC721: Permission to transfer not granted from your address");
+
+    require(ownerOfNFT[_tokenId] == _from);
+    require(_to != address(0), "ERC721: Transfer cannot go to the 0 address!");
+    require(_tokenId < kittys.length);
+
+    _safeTransfer(_from, _to, _tokenId, data);
+  }
+
+  function safeTransferFrom(address _from, address _to, uint256 _tokenId) external override {
+    safeTransferFrom(_from, _to, _tokenId, "");
+  }
+
   //part of safeTransferFrom(), CHECKS to make sure token destination supports NFT
   function _safeTransfer(address _from, address _to, uint256 _tokenId, bytes calldata data) internal {
     _transfer(_from, _to, _tokenId);

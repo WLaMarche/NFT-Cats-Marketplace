@@ -12,6 +12,10 @@ contract KittycontractNFT is IERC721, Ownable {
   string public constant _tokenName = "WaterstoneKittys";
   string public constant _tokenSymbol = "WSK";
 
+  //used in external func supportsInterface() for contract interoperability
+  bytes4 private constant _INTERFACE_ID_ERC721 = 0x80ac58cd;
+  bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
+
   //mapping of NFT balance for address
   mapping(address => uint256) balances;
   //mapping of specific NFT owned by address
@@ -29,14 +33,27 @@ contract KittycontractNFT is IERC721, Ownable {
   uint256 public gen0Counter;
 
   struct Kittys {
+    address owner;
     uint256 genes;
     uint32 momID;
     uint32 dadID;
-    uint64 birthTime;
     uint16 generation;
   }
 
   Kittys[] kittys;
+
+  //ERC721 standard func that allows other contracts to check to see if OUR contract supports specific ERC standards
+  //INPUT a unique bytes4 hash (Ethereum sets these) to see if my contract returns true (supports) or false (does not support)
+  function supportsInterface(bytes4 _interfaceID) external view returns(bool){
+    if(_interfaceID == _INTERFACE_ID_ERC721 || _interfaceID == _INTERFACE_ID_ERC165){
+      return true;
+    }
+    else{
+      return false;
+    }
+
+    //return (_interfaceID == _INTERFACE_ID_ERC721 || _interfaceID == _INTERFACE_ID_ERC165);
+  }
 
   /**
    * @dev Returns the number of tokens in ``owner``'s account.
@@ -137,7 +154,7 @@ contract KittycontractNFT is IERC721, Ownable {
         dadID: uint32(_dadID),
         generation: uint16(_generation),
         genes: uint256(_genes),
-        birthTime: uint64(block.timestamp)
+        owner: _owner
         });
 
       kittys.push(_kitty);
@@ -152,7 +169,7 @@ contract KittycontractNFT is IERC721, Ownable {
 
   }
 
-  function getKitty(uint256 tokenID) external view returns(uint, uint, uint, uint, uint){
+  function getKitty(uint256 tokenID) external view returns(uint, uint, uint, address, uint){
 
     //Kittys[] storage _kittys = kittys[tokenID];
 
@@ -168,7 +185,7 @@ contract KittycontractNFT is IERC721, Ownable {
         kitties.genes,
         kitties.momID,
         kitties.dadID,
-        kitties.birthTime,
+        kitties.owner,
         kitties.generation
         );
   }
@@ -264,7 +281,7 @@ contract KittycontractNFT is IERC721, Ownable {
 
   }
 
-  function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes calldata data) external override {
+  function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes calldata data) public override {
     require( owns(msg.sender, _tokenId) ||
     operatorApproval[_from][msg.sender] == true ||
     nftApprovals[_tokenId] == msg.sender, "ERC721: Permission to transfer not granted from your address");
@@ -276,8 +293,8 @@ contract KittycontractNFT is IERC721, Ownable {
     _safeTransfer(_from, _to, _tokenId, data);
   }
 
-  function safeTransferFrom(address _from, address _to, uint256 _tokenId) external override {
-    safeTransferFrom(_from, _to, _tokenId, "");
+  function safeTransferFrom(address _from, address _to, uint256 _tokenId) public override {
+    safeTransferFrom(_from, _to, _tokenId, " ");
   }
 
   //part of safeTransferFrom(), CHECKS to make sure token destination supports NFT

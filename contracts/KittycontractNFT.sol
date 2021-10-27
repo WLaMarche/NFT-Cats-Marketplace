@@ -281,6 +281,10 @@ contract KittycontractNFT is IERC721, Ownable {
 
   }
 
+  function safeTransferFrom(address _from, address _to, uint256 _tokenId) public override {
+    safeTransferFrom(_from, _to, _tokenId, "");
+  }
+
   function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes calldata data) public override {
     require( owns(msg.sender, _tokenId) ||
     operatorApproval[_from][msg.sender] == true ||
@@ -293,15 +297,11 @@ contract KittycontractNFT is IERC721, Ownable {
     _safeTransfer(_from, _to, _tokenId, data);
   }
 
-  function safeTransferFrom(address _from, address _to, uint256 _tokenId) public override {
-    safeTransferFrom(_from, _to, _tokenId, " ");
-  }
-
   //part of safeTransferFrom(), CHECKS to make sure token destination supports NFT
   function _safeTransfer(address _from, address _to, uint256 _tokenId, bytes calldata data) internal {
+    require( _checkERC721Support(_from, _to, _tokenId, data) );
     _transfer(_from, _to, _tokenId);
     //CHECK if created func '_checkERC721Support' returns boolean true
-    require( _checkERC721Support(_from, _to, _tokenId, data) );
   }
 
   //calls _to contract to see if it supports ERC721 token standard

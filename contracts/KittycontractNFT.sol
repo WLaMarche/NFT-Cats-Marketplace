@@ -97,14 +97,9 @@ contract KittycontractNFT is IERC721, Ownable {
 
   //breed momNFT & dadNFT together --> first 8 integers come from dad, last 8 integers come from mom
   function breedKittys(uint256 _dad, uint256 _mom) public returns(uint256){
-    //extract dad with 11 0's --> dadID / 100,000,000,000
-    //extract momID with momID % 10,000,000,000
-    uint256 dadiDSet = (_dad / 100000000000);
-    uint256 momiDSet = (_mom % 10000000000);
-
-    uint256 kittenKitty = (dadiDSet + momiDSet);
-
-    createKittyGen1(kittenKitty);
+    //require(owns(msg.sender, _dad));
+    //require(owns(msg.sender, _mom));
+    _mixDNA(_mom, _dad);
   }
 
   /* @dev Transfers `tokenId` token from `msg.sender` to `to`.
@@ -147,25 +142,38 @@ contract KittycontractNFT is IERC721, Ownable {
     return ownerOfNFT[tokenID] == _from;
   }
 
-  function createKittyGen0(uint256 _genes) public returns(uint256) {
+  function createKittyGen0(uint256 _genes) public returns(uint256){
     //takes the genes that you send in from front send
     //creates a new kitty for us with those specific genes
     require(gen0Counter <= gen0Limit);
 
     gen0Counter++;
     //use _createKitty()
-
     return _createKitty(0, 0, 0, _genes, msg.sender);
   }
 
-  function createKittyGen1(uint256 _genes) public returns(uint256) {
+  function _mixDNA(uint256 _momDNA, uint256 _dadDNA) internal returns(uint256){
+    //extract dad with 11 0's --> dadID / 100,000,000,000
+    //extract momID with momID % 10,000,000,000
+    uint256 dadiDSet = (_dadDNA / 100000000000);
+    uint256 momiDSet = (_momDNA % 100000000000);
+
+
+    uint256 newKittenDNA = dadiDSet * 100000000000;
+    newKittenDNA = newKittenDNA + momiDSet;
+    return newKittenDNA;
+
+    _createKittyGen1(newKittenDNA, _momDNA, _dadDNA);
+  }
+
+  function _createKittyGen1(uint256 _genes, uint256 _mom, uint256 _dad) internal returns(uint256) {
     //takes the genes that you send in from front send
     //creates a new kitty for us with those specific genes
     require(gen1Counter <= gen1Limit);
 
     gen1Counter++;
-    //use _createKitty()
 
+    //use _createKitty()
     return _createKitty(_mom, _dad, 1, _genes, msg.sender);
   }
 

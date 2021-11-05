@@ -96,10 +96,27 @@ contract KittycontractNFT is IERC721, Ownable {
   }
 
   //breed momNFT & dadNFT together --> first 8 integers come from dad, last 8 integers come from mom
-  function breedKittys(uint256 _dad, uint256 _mom) public returns(uint256){
-    //require(owns(msg.sender, _dad));
-    //require(owns(msg.sender, _mom));
-    _mixDNA(_mom, _dad);
+  function breedKittys(uint256 _mom, uint256 _dad) public returns(uint256){
+    //check that msg.sender has ownership of _mom & _dad
+    require(owns(msg.sender, _mom));
+    require(owns(msg.sender, _dad));
+    //mix DNA
+    uint256 kittenDNA = _mixDNA(_mom, _dad);
+    //figure out the generation (ie dad is Gen0, mom is Gen5)
+    uint256 newGen = _findGen(_mom, _dad);
+    //create new cat with new properties, give it to msg.sender
+
+  }
+
+  function _findGen(uint256 _mom, uint256 _dad) internal returns(uint256){
+    uint245 mumID;
+    uint256 fatherID;
+    _mom = Kittys[] memory momkittysID;
+    mumID = _mom.generation;
+    _dad = Kittys[] memory dadkittysID;
+    fatherID = _dad.generation;
+
+    return ((mumID + fatherID) / 1.5);
   }
 
   /* @dev Transfers `tokenId` token from `msg.sender` to `to`.
@@ -163,7 +180,7 @@ contract KittycontractNFT is IERC721, Ownable {
     newKittenDNA = newKittenDNA + momiDSet;
     return newKittenDNA;
 
-    _createKittyGen1(newKittenDNA, _momDNA, _dadDNA);
+    //_createKittyGen1(newKittenDNA, _momDNA, _dadDNA);
   }
 
   function _createKittyGen1(uint256 _genes, uint256 _mom, uint256 _dad) internal returns(uint256) {

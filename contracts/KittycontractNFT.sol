@@ -28,11 +28,9 @@ contract KittycontractNFT is IERC721, Ownable {
 
   //NFT creation limit
   uint256 public constant gen0Limit = 10;
-  uint256 public constant gen1Limit = 10;
 
   //NFT Gen0 limit
   uint256 public gen0Counter;
-  uint256 public gen1Counter;
 
   struct Kittys {
     address owner;
@@ -96,27 +94,37 @@ contract KittycontractNFT is IERC721, Ownable {
   }
 
   //breed momNFT & dadNFT together --> first 8 integers come from dad, last 8 integers come from mom
-  function breedKittys(uint256 _mom, uint256 _dad) public returns(uint256){
+  function breedKittys(uint256 _momID, uint256 _dadID) public returns(uint256){
     //check that msg.sender has ownership of _mom & _dad
-    require(owns(msg.sender, _mom));
-    require(owns(msg.sender, _dad));
+    require(owns(msg.sender, _momID));
+    require(owns(msg.sender, _dadID));
+
+    //call getKitty() to retrieve info about tokenID
+    (uint256 dadGenes,,,, uint256 dadGeneration) = getKitty(_dadID);
+    (uint256 momGenes,,,, uint256 momGeneration) = getKitty(_momID);
     //mix DNA
-    uint256 kittenDNA = _mixDNA(_mom, _dad);
+    uint256 kittenDNA = _mixDNA(momGenes, dadGenes);
     //figure out the generation (ie dad is Gen0, mom is Gen5)
-    uint256 newGen = _findGen(_mom, _dad);
+    uint256 newGen = _findGen(momGeneration, dadGeneration);
     //create new cat with new properties, give it to msg.sender
+    _createKitty(_momID, _dadID, newGen, kittenDNA, msg.sender);
 
   }
 
-  function _findGen(uint256 _mom, uint256 _dad) internal returns(uint256){
-    uint245 mumID;
-    uint256 fatherID;
-    _mom = Kittys[] memory momkittysID;
-    mumID = _mom.generation;
-    _dad = Kittys[] memory dadkittysID;
-    fatherID = _dad.generation;
-
-    return ((mumID + fatherID) / 1.5);
+  function _findGen(uint256 _momGeneration, uint256 _dadGeneration) internal returns(uint256){
+    uint256 kidGeneration;
+    if(_dadGeneration > _momGeneration){
+      kidGeneration = _dadGeneration + 1;
+      kidGeneration = kidGeneration / 2;
+    }
+    if(_dadGeneration < _momGeneration){
+      kidGeneration = _momGeneration + 1;
+      kidGeneration = kidGeneration / 2;
+    }
+    else{
+      kidGeneration = _momGeneration + 1;
+    }
+    return kidGeneration;
   }
 
   /* @dev Transfers `tokenId` token from `msg.sender` to `to`.
@@ -183,17 +191,6 @@ contract KittycontractNFT is IERC721, Ownable {
     //_createKittyGen1(newKittenDNA, _momDNA, _dadDNA);
   }
 
-  function _createKittyGen1(uint256 _genes, uint256 _mom, uint256 _dad) internal returns(uint256) {
-    //takes the genes that you send in from front send
-    //creates a new kitty for us with those specific genes
-    require(gen1Counter <= gen1Limit);
-
-    gen1Counter++;
-
-    //use _createKitty()
-    return _createKitty(_mom, _dad, 1, _genes, msg.sender);
-  }
-
   function _createKitty(uint256 _momID, uint256 _dadID, uint256 _generation, uint256 _genes, address _owner) internal returns(uint256){
 
       Kittys memory _kitty = Kittys({
@@ -217,7 +214,7 @@ contract KittycontractNFT is IERC721, Ownable {
 
   }
 
-  function getKitty(uint256 tokenID) external view returns(uint, uint, uint, address, uint){
+  function getKitty(uint256 tokenID) public view returns(uint, uint, uint, address, uint){
 
     //Kittys[] storage _kittys = kittys[tokenID];
 

@@ -1,4 +1,4 @@
-//create a variable that represents a web3 library
+alert("whats up.");//create a variable that represents a web3 library
 //Web3(takes an argument that is a URL to whatever ETH node you hvae)
 //with metamask, you can just write web3.givenProvider
   //takes whatever you provider we get from MetaMask (local node, testnet or mainnet)
@@ -11,24 +11,24 @@ var user; //defines our user
 var contractAddress = '0xdDf5194D73Fc0e31df89ee63E204aC79B6474eCb'; //defines our contract Address here
 
 //whenever the page is done loading...
-//$(document).ready(function(){
+$(document).ready(function(){
 //get to work on web3 Application
 //this is true for all web3 applications (where we want to use MetaMask)
 //we need to call MetaMask's enable function (like a login Prompt)
   //--> prompts the user to allow our website to use the user's MetaMask account
-  //window.ethereum.enable().then(function(accounts){
+  window.ethereum.enable().then(function(accounts){
     //in almost every case, our account in MetaMask will always have one single Address
     //accounts is an array, but the account being used is the first one in the array..
 
     //instance represents the contract being called
     //'abi' is a specification of what our contract does
-    //instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]})
-    //user = accounts[0];
+    instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]})
+    user = accounts[0];
 
-    //console.log(instance);
-  //});
+    console.log(instance);
+  });
+  });
 
-//});
 
 //dev -->
 //*
@@ -44,10 +44,9 @@ var contractAddress = '0xdDf5194D73Fc0e31df89ee63E204aC79B6474eCb'; //defines ou
       //--> have a 'confirmation' that tells the user it's been submitted
 //use getDNA function in catSettings
 //we need to call MetaMask's enable function (like a login Prompt)
-$(document).ready(function(){
-function customKittyClicked(){
 
-  window.ethereum.enable().then(function(accounts){
+
+function customKittyClicked(){
 
   var dnaStr = getDna();
   var toString = dnaStr.toString();
@@ -91,8 +90,7 @@ function customKittyClicked(){
   });
 }
 
-);
-}}
+
 
 
   //listen for birth event, if event listener fires, alert info across screen

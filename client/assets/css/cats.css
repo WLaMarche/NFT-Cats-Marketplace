@@ -12,6 +12,13 @@ body {
 
 }
 
+.cat2{
+  position: relative;
+  margin: fill;
+  width: 100px;
+  height: 255px;
+}
+
 .cat{
   position: relative;
   margin: fill;
